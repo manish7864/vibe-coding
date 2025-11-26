@@ -116,12 +116,37 @@ export default function SnakeGame(){
     const canvas = canvasRef.current
     if(!canvas) return
     const ctx = canvas.getContext('2d')
+
+    // background
     ctx.fillStyle = '#0f172a'
     ctx.fillRect(0,0,CANVAS_SIZE,CANVAS_SIZE)
 
+    // grid
+    const gridColor = 'rgba(255,255,255,0.03)'
+    ctx.strokeStyle = gridColor
+    ctx.lineWidth = 1
+
+    // draw vertical lines
+    for(let x = 0; x <= CANVAS_SIZE; x += SCALE){
+      ctx.beginPath()
+      ctx.moveTo(x + 0.5, 0)
+      ctx.lineTo(x + 0.5, CANVAS_SIZE)
+      ctx.stroke()
+    }
+
+    // draw horizontal lines
+    for(let y = 0; y <= CANVAS_SIZE; y += SCALE){
+      ctx.beginPath()
+      ctx.moveTo(0, y + 0.5)
+      ctx.lineTo(CANVAS_SIZE, y + 0.5)
+      ctx.stroke()
+    }
+
+    // apple
     ctx.fillStyle = '#ef4444'
     ctx.fillRect(appleRef.current.x * SCALE, appleRef.current.y * SCALE, SCALE, SCALE)
 
+    // snake
     ctx.fillStyle = '#22c55e'
     for(const part of snakeRef.current){
       ctx.fillRect(part.x * SCALE + 1, part.y * SCALE +1, SCALE -2, SCALE -2)
